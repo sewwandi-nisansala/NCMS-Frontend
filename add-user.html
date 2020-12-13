@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add User - National Covid Management System</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/toastr/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top" id="mainNav" data-include="menu">
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="users.html">Users</a>
+                </li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+            <div id="title" class="row">
+                <div class="col-12">
+                    <h1>Add User</h1>
+                </div>
+            </div>
+
+            <div class="card mb-3 mt-3">
+                <div class="card-header">
+                    Details
+                </div>
+                <div class="card-body">
+                <form id="addUser">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Role</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="role" name="role" required>
+                                <option value=1>MOH</option>
+                                <option value=2>Doctor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="hospital-container" style="display: none;">
+                        <label class="col-sm-2 col-form-label">Assigned Hospital</label>
+                        <div class="col-sm-10">
+                            <select id="hospital" class="form-control" name="hospital_id" required>
+                    
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-md-4">
+                            <input class="form-control" type="password" name="password" required>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-md-4">
+                            <input class="form-control" type="password" name="c_password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Spark 2020</small>
+                </div>
+            </div>
+        </footer>
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/jquery/js.cookie-2.2.1.min.js"></script>
+        <script src="vendor/toastr/toastr.min.js"></script>
+        <script src="vendor/sweetalert2/sweetalert2.min.js"></script>
+        <script src="js/sb-admin.js"></script>
+        <script src="inc/js/ui.js"></script>
+        <script src="inc/js/functions.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                loadHospitalsToDropdown();
+
+                $('#role').on('change', function (e) {
+                    let role = this.value;
+                    if (role == 1){
+                        $('#hospital-container').hide();
+                    }else{
+                        $('#hospital-container').show();
+                    }
+                });
+
+                $('#addUser').submit(function (e) {
+                    e.preventDefault();
+                    $(".errorMessage").remove();
+
+                    let form = $(this);
+                    addUser(form)
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>

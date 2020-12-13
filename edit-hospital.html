@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit Hospital - National Covid Management System</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/toastr/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top" id="mainNav" data-include="menu">
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="hospitals.html">Hospitals</a>
+                </li>
+                <li class="breadcrumb-item active">Edit</li>
+            </ol>
+            <div class="row">
+                <div class="col-12">
+                    <h1>Edit Hospital</h1>
+                </div>
+            </div>
+
+            <div class="card mb-3 mt-3">
+                <div class="card-header">
+                    Details
+                </div>
+                <div class="card-body">
+                <form id="updateHospital">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Director</label>
+                        <div class="col-sm-10">
+                            <select id="doctor" class="form-control" name="user_id" required>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">District</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="district" name="district">
+                                <option value=1>District 1</option>
+                                <option value=2>District 2</option>
+                                <option value=3>District 3</option>
+                                <option value=4>District 4</option>
+                                <option value=5>District 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Geolocation</label>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" id="geolocation_x" name="geolocation_x" required max="600" min="0">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" id="geolocation_y" name="geolocation_y" required max="600" min="0">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="sticky-footer">
+            <div class="container">
+            </div>
+        </footer>
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/jquery/js.cookie-2.2.1.min.js"></script>
+        <script src="vendor/toastr/toastr.min.js"></script>
+        <script src="vendor/sweetalert2/sweetalert2.min.js"></script>
+        <script src="js/sb-admin.js"></script>
+        <script src="inc/js/ui.js"></script>
+        <script src="inc/js/functions.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.when(loadDoctorsToDropdown()).then(editHospital(getUrlParameter("id")));
+
+                $('#updateHospital').submit(function (e) {
+                    e.preventDefault();
+                    let form = $(this);
+                    updateHospital(getUrlParameter("id"), form)
+                });
+
+                $('#delete').click(function (e){
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Confirm Action',
+                        text: 'Are you sure do you want to delete?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        allowEnterKey: false,
+                        confirmButtonText: 'Delete',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.value) {
+                            $.when(deleteHospital(getUrlParameter("id"))).then(window.location.replace("hospitals.html"));
+                        }
+                    });
+                })
+            });
+        </script>
+    </div>
+</body>
+
+</html>
